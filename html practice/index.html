@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>File Safety Analyzer</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="navbar">
+
+    <div class="brand">
+
+        <div class="brand-shield">
+            🛡
+        </div>
+
+        <div class="brand-text">
+            <strong>File Safety Analyzer</strong>
+        </div>
+
+    </div>
+
+
+    <!-- These are TEXT LINKS, NOT BUTTONS -->
+
+    <nav class="nav-links">
+
+        <a href="#" onclick="showPage('home'); return false;">
+            Home
+        </a>
+
+        <a href="#" onclick="showPage('about'); return false;">
+            About
+        </a>
+
+        <a href="#" onclick="showPage('history'); return false;">
+            History
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =====================================================
+     PAGE 1 : HOME
+===================================================== -->
+
+<section id="home" class="page active-page">
+
+    <div class="home-container">
+
+
+        <!-- LEFT SIDE -->
+
+        <div class="home-content">
+
+            <h1>
+                Check Your Files
+                <br>
+                <span>for Safety</span>
+            </h1>
+
+
+            <p class="home-description">
+
+                Upload any file and analyze its type, hash,
+                and potential threats. Stay safe, stay secure.
+
+            </p>
+
+
+            <!-- Three small features -->
+
+            <div class="home-features">
+
+                <div class="home-feature">
+
+                    <div class="feature-symbol">
+                        🛡
+                    </div>
+
+                    <div>
+                        <strong>Detect</strong>
+                        <small>Malicious Files</small>
+                    </div>
+
+                </div>
+
+
+                <div class="home-feature">
+
+                    <div class="feature-symbol">
+                        ♧
+                    </div>
+
+                    <div>
+                        <strong>Check File</strong>
+                        <small>Integrity</small>
+                    </div>
+
+                </div>
+
+
+                <div class="home-feature">
+
+                    <div class="feature-symbol">
+                        ▤
+                    </div>
+
+                    <div>
+                        <strong>Get Detailed</strong>
+                        <small>Analysis</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Start Analysis -->
+
+            <button
+                class="primary-button home-start"
+                onclick="showPage('analyze')">
+
+                Start Analysis
+                <span>→</span>
+
+            </button>
+
+        </div>
+
+
+
+        <!-- RIGHT SIDE VISUAL -->
+
+        <div class="home-visual">
+
+            <div class="visual-cloud">
+
+                <div class="file-icon pdf-icon">
+                    PDF
+                </div>
+
+                <div class="file-icon doc-icon">
+                    DOC
+                </div>
+
+                <div class="file-icon jpg-icon">
+                    JPG
+                </div>
+
+                <div class="file-icon code-icon">
+                    &lt;/&gt;
+                </div>
+
+
+                <div class="main-file">
+
+                    <div class="file-lines">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <div class="file-check">
+                        ✓
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PAGE 2 : ANALYZE / UPLOAD
+===================================================== -->
+
+<section id="analyze" class="page">
+
+    <div class="analyze-container">
+
+        <h2>
+            Analyze Your File
+        </h2>
+
+        <p class="page-description">
+
+            Upload a file to check its type, calculate the
+            SHA-256 hash and detect any suspicious content.
+
+        </p>
+
+
+        <!-- Upload Card -->
+
+        <div class="upload-card">
+
+
+            <!-- Drag Drop Area -->
+
+            <div
+                class="drop-area"
+                id="dropArea">
+
+                <div class="cloud-icon">
+                    ☁
+                </div>
+
+                <h3>
+                    Drag & Drop your file here
+                </h3>
+
+                <p>
+                    or
+                </p>
+
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    hidden>
+
+
+                <label
+                    for="fileInput"
+                    class="choose-button">
+
+                    Choose File
+
+                </label>
+
+
+                <small>
+                    Supported formats: PDF, DOC, DOCX, JPG, PNG, TXT, etc.
+                </small>
+
+            </div>
+
+
+            <!-- Selected File -->
+
+            <div
+                id="selectedFile"
+                class="selected-file hidden">
+
+                <div class="selected-file-icon">
+                    📄
+                </div>
+
+
+                <div class="selected-file-info">
+
+                    <strong id="fileName">
+                        sample.pdf
+                    </strong>
+
+                    <span id="fileInfo">
+                        2.4 MB • PDF
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="remove-file"
+                    id="removeFile">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <!-- Action buttons -->
+
+            <div class="upload-actions">
+
+                <button
+                    id="analyzeButton"
+                    class="primary-button"
+                    disabled>
+
+                    Analyze File
+
+                </button>
+
+
+                <button
+                    id="clearButton"
+                    class="secondary-button">
+
+                    Clear
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PAGE 3 : ANALYZING
+===================================================== -->
+
+<section id="analyzing" class="page">
+
+    <div class="analyzing-card">
+
+
+        <!-- Loader -->
+
+        <div class="loader"></div>
+
+
+        <h2>
+            Analyzing your file...
+        </h2>
+
+
+        <p>
+            Please wait while we check the file for safety.
+        </p>
+
+
+        <small>
+            This may take a few seconds.
+        </small>
+
+
+
+        <!-- Analysis Steps -->
+
+        <div class="analysis-progress">
+
+
+            <div class="progress-line"></div>
+
+
+            <!-- Step 1 -->
+
+            <div class="analysis-step active">
+
+                <div class="step-circle">
+                    📄
+                </div>
+
+                <strong>
+                    Reading File
+                </strong>
+
+            </div>
+
+
+            <!-- Step 2 -->
+
+            <div class="analysis-step">
+
+                <div class="step-circle">
+                    ⚙
+                </div>
+
+                <strong>
+                    Calculating Hash
+                </strong>
+
+            </div>
+
+
+            <!-- Step 3 -->
+
+            <div class="analysis-step">
+
+                <div class="step-circle">
+                    🛡
+                </div>
+
+                <strong>
+                    Scanning
+                </strong>
+
+            </div>
+
+
+            <!-- Step 4 -->
+
+            <div class="analysis-step">
+
+                <div class="step-circle">
+                    ☷
+                </div>
+
+                <strong>
+                    Generating Result
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PAGE 4 : RESULT
+===================================================== -->
+
+<section id="result" class="page">
+
+    <div class="result-container">
+
+
+        <!-- SAFE BANNER -->
+
+        <div class="safe-banner">
+
+            <div class="safe-check">
+                ✓
+            </div>
+
+            <div>
+
+                <h2>
+                    File is Safe
+                </h2>
+
+                <p>
+                    No threats detected. This file appears to be safe.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- RESULT GRID -->
+
+        <div class="result-grid">
+
+
+            <!-- FILE DETAILS -->
+
+            <div class="result-card">
+
+                <h3>
+                    🛡 File Details
+                </h3>
+
+
+                <div class="detail-row">
+
+                    <span>📄 File Name</span>
+
+                    <strong id="resultFileName">
+                        sample.pdf
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span>📄 File Type</span>
+
+                    <strong id="resultFileType">
+                        PDF (application/pdf)
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span>▣ File Size</span>
+
+                    <strong id="resultFileSize">
+                        2.4 MB
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span>▣ Date Analyzed</span>
+
+                    <strong id="resultDate">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- HASH + SAFETY -->
+
+            <div class="right-result">
+
+
+                <!-- SHA HASH -->
+
+                <div class="result-card hash-card">
+
+                    <h3>
+                        ◉ SHA-256 Hash
+                    </h3>
+
+                    <p id="hashValue">
+                        a3f4e8c1b2d3f4e5g6h7i8j9k0l1m2n3...
+                    </p>
+
+                </div>
+
+
+                <!-- SAFETY STATUS -->
+
+                <div class="result-card">
+
+                    <h3>
+                        🛡 Safety Status
+                    </h3>
+
+
+                    <div class="safe-pill">
+                        SAFE
+                    </div>
+
+
+                    <p class="safety-message">
+                        This file appears to be safe.
+                        No malicious content detected.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Additional Details -->
+
+        <div class="additional-details">
+
+            <strong>
+                ● &nbsp; Additional Details
+            </strong>
+
+            <span>
+                ˅
+            </span>
+
+        </div>
+
+
+
+        <!-- Result buttons -->
+
+        <div class="result-actions">
+
+            <button
+                class="primary-button"
+                onclick="showPage('analyze')">
+
+                Analyze Another File
+
+            </button>
+
+
+            <button
+                class="outline-button"
+                onclick="showPage('history')">
+
+                View History
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PAGE 5 : HISTORY
+===================================================== -->
+
+<section id="history" class="page">
+
+    <div class="history-container">
+
+
+        <div class="history-heading">
+
+            <div class="history-title-icon">
+                ◷
+            </div>
+
+            <div>
+
+                <h2>
+                    Analysis History
+                </h2>
+
+                <p>
+                    View your previously analyzed files and their results.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- History Table -->
+
+        <div class="history-card">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+                        <th>File Name</th>
+                        <th>Type</th>
+                        <th>Size</th>
+                        <th>Date & Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="historyBody">
+
+
+                    <!-- Sample row -->
+
+                    <tr>
+
+                        <td>1</td>
+
+                        <td>
+                            <span class="history-file">
+                                📄 sample.pdf
+                            </span>
+                        </td>
+
+                        <td>PDF</td>
+
+                        <td>2.4 MB</td>
+
+                        <td>Apr 25, 2025, 10:30 AM</td>
+
+                        <td>
+                            <span class="status safe">
+                                ● Safe
+                            </span>
+                        </td>
+
+                        <td>
+                            <button class="view-button">
+                                ▣ View
+                            </button>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>2</td>
+
+                        <td>
+                            <span class="history-file">
+                                📄 document.docx
+                            </span>
+                        </td>
+
+                        <td>DOCX</td>
+
+                        <td>1.2 MB</td>
+
+                        <td>Apr 24, 2025, 04:15 PM</td>
+
+                        <td>
+                            <span class="status safe">
+                                ● Safe
+                            </span>
+                        </td>
+
+                        <td>
+                            <button class="view-button">
+                                ▣ View
+                            </button>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>3</td>
+
+                        <td>
+                            <span class="history-file">
+                                🖼 image.jpg
+                            </span>
+                        </td>
+
+                        <td>JPG</td>
+
+                        <td>845 KB</td>
+
+                        <td>Apr 24, 2025, 11:20 AM</td>
+
+                        <td>
+                            <span class="status suspicious">
+                                ● Suspicious
+                            </span>
+                        </td>
+
+                        <td>
+                            <button class="view-button">
+                                ▣ View
+                            </button>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>4</td>
+
+                        <td>
+                            <span class="history-file">
+                                📄 malware.exe
+                            </span>
+                        </td>
+
+                        <td>EXE</td>
+
+                        <td>5.6 MB</td>
+
+                        <td>Apr 23, 2025, 09:42 PM</td>
+
+                        <td>
+                            <span class="status unsafe">
+                                ● Unsafe
+                            </span>
+                        </td>
+
+                        <td>
+                            <button class="view-button">
+                                ▣ View
+                            </button>
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PAGE 6 : ABOUT
+===================================================== -->
+
+<section id="about" class="page">
+
+    <div class="about-container">
+
+
+        <!-- LEFT -->
+
+        <div class="about-content">
+
+            <div class="about-title">
+
+                <div class="about-shield">
+                    🛡
+                </div>
+
+                <h2>
+                    About File Safety Analyzer
+                </h2>
+
+            </div>
+
+
+            <p class="about-description">
+
+                File Safety Analyzer is a simple and effective
+                tool to check the safety of your files. It analyzes
+                file types, calculates SHA-256 hashes, and detects
+                potentially suspicious content to help keep your
+                data secure.
+
+            </p>
+
+
+
+            <!-- About features -->
+
+            <div class="about-feature">
+
+                <div class="about-feature-icon">
+                    ◉
+                </div>
+
+                <div>
+
+                    <h3>
+                        File Type Detection
+                    </h3>
+
+                    <p>
+                        Identifies the type of the file you upload.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="about-feature">
+
+                <div class="about-feature-icon">
+                    ◉
+                </div>
+
+                <div>
+
+                    <h3>
+                        SHA-256 Hash Calculation
+                    </h3>
+
+                    <p>
+                        Generates a unique hash for file integrity.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="about-feature">
+
+                <div class="about-feature-icon">
+                    🛡
+                </div>
+
+                <div>
+
+                    <h3>
+                        Threat Detection
+                    </h3>
+
+                    <p>
+                        Checks for suspicious or malicious content.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- RIGHT VISUAL -->
+
+        <div class="about-visual">
+
+            <div class="laptop">
+
+                <div class="laptop-screen">
+
+                    <div class="screen-shield">
+                        ✓
+                    </div>
+
+                </div>
+
+                <div class="laptop-base"></div>
+
+            </div>
+
+
+            <div class="floating-file file-one">
+                PDF
+            </div>
+
+            <div class="floating-file file-two">
+                JPG
+            </div>
+
+            <div class="floating-file file-three">
+                &lt;/&gt;
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <div>
+        © 2026 File Safety Analyzer
+        <span>|</span>
+        Secure Files. Safer Tomorrow.
+    </div>
+
+
+    <div class="footer-links">
+
+        <a href="#" onclick="showPage('home'); return false;">
+            Home
+        </a>
+
+        <a href="#" onclick="showPage('about'); return false;">
+            About
+        </a>
+
+        <a href="#" onclick="showPage('history'); return false;">
+            History
+        </a>
+
+    </div>
+
+</footer>
+
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
